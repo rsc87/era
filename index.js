@@ -10,7 +10,8 @@ app.get('/', (req, res) => {
   let result = {
     monthlyBase: 1488.0,
     monthlyBonus: 42,
-    monthlyTotal: 1530
+    monthlyTotal: 1530,
+    yearlyTotal: 1530*12
   }
   res.send(result)
 })
