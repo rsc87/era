@@ -1,20 +1,33 @@
 
 const express = require('express')
-const app = express()
+const fs = require('fs')
+
 const port = process.env.PORT || 1337
+const app = express()
+
+let conf = JSON.parse(fs.readFileSync('conf.json'))
+
+
 
 app.get('/', (req, res) => {
   
+  res.contentType("text/plain")
+  res.send("Your probably wanted to go to the API")
+})
+
+app.get('/api/:year/:group', (req, res) => {
+  if(!req.params.year) return "{ERR}"
+  if(!req.params.group) return "{ERR}"
+
   res.contentType("application/json")
-  
+
+  let table = conf[req.params.year].eraTable
   let result = {
-    monthlyBase: 1488.0,
-    monthlyBonus: 42,
-    monthlyTotal: 1530,
-    yearlyTotal: 1530*12
+    monthlyBase: table[req.params.group]
   }
   res.send(result)
 })
+
 
 app.listen(port, () => {
   console.log(`era listening at http://localhost:${port}`)
