@@ -19,6 +19,12 @@ const era = {
             "eg15": 5363.00,
             "eg16": 5719.50,
             "eg17": 6043.50
+        },
+        "benefitFunctions": {
+            "Urlaubsgeld (Juni)": m => m * 0.3,
+            "T-Zug (Juli)": m => m * 0.3,
+            "Corona (Juli)": m => 500,
+            "Weihnachtsgeld (Nov)": m => m * 0.3
         }
     }
 }
@@ -33,6 +39,22 @@ function calculate(year, group, hours, bonusFactor){
     result.monthlyBonus = round2(result.monthlyBase * bonusFactor)
     result.monthlyTotal = round2(result.monthlyBase + result.monthlyBonus)
     result.yearlyBase = round2(result.monthlyTotal * 12)
+    
+    let benefits = [];
+    let sum = .0;
+    for(fun in era[year].benefitFunctions){
+        let amount = era[year].benefitFunctions[fun](result.monthlyBase);
+        benefits.push({
+            "name": fun,
+            "amount": amount
+        })
+        sum += amount
+    }
+
+    result.benefits = benefits
+    result.benefitSum = sum
+    result.yearlyTotal = result.yearlyBase + sum 
+
     return result;
 }
 
