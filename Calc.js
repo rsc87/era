@@ -43,7 +43,7 @@ function calculate(year, group, hours, bonusFactor){
     let benefits = [];
     let sum = .0;
     for(fun in era[year].benefitFunctions){
-        let amount = era[year].benefitFunctions[fun](result.monthlyBase);
+        let amount = round2(era[year].benefitFunctions[fun](result.monthlyBase));
         benefits.push({
             "name": fun,
             "amount": amount
