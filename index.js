@@ -18,18 +18,26 @@ app.get('/', (req, res) => {
 app.get('/api/:year/:group', (req, res) => {
   if(!req.params.year) return "{ERR}"
   if(!req.params.group) return "{ERR}"
+  let hours = req.query.hours || 35;
+  let bonusFactor = (req.query.bonus || 0) / 100
 
   res.contentType("application/json")
-
-  let table = conf[req.params.year].eraTable
-  let result = {
-    monthlyBase: table[req.params.group]
-  }
-  res.send(conf[req.params.year])
+  let year = conf[req.params.year];
+  let result = {}
+  result.monthlyBase = round2(year.eraTable[req.params.group] / year.weeklyHours * hours)
+  result.monthlyBonus = round2(result.monthlyBase * bonusFactor)
+  result.monthlyTotal = round2(result.monthlyBase + result.monthlyBonus)
+  result.yearlyBase = round2(result.monthlyTotal * 12)
+  
+  res.send(result)
 })
 
 
 app.listen(port, () => {
   console.log(`era listening at http://localhost:${port}`)
 })
+
+function round2(val){
+  return Math.round(val * 100) / 100
+}
 
