@@ -24,6 +24,7 @@ app.get('/api/:year/:group', (req, res) => {
   res.contentType("application/json")
   let year = conf[req.params.year];
   let result = {}
+  result.desc = `${req.params.group} in ${req.params.year}, working ${hours} with bonus factor of ${bonusFactor}`
   result.monthlyBase = round2(year.eraTable[req.params.group] / year.weeklyHours * hours)
   result.monthlyBonus = round2(result.monthlyBase * bonusFactor)
   result.monthlyTotal = round2(result.monthlyBase + result.monthlyBonus)
