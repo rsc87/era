@@ -1,9 +1,12 @@
-http://localhost:1337/api/2021/eg12
+GET http://localhost:1337/api/2021/eg12
 
 ###
 
-http://localhost:1337/api/2021/eg12?hours=40
+GET http://localhost:1337/api/2021/eg12
+    ?hours=40
 
 ###
 
-http://localhost:1337/api/2021/eg12?hours=40&bonus=7
+GET http://localhost:1337/api/2021/eg12
+    ?hours=40
+    &bonus=7
