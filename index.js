@@ -25,7 +25,7 @@ app.get('/api/:year/:group', (req, res) => {
   let result = {
     monthlyBase: table[req.params.group]
   }
-  res.send(result)
+  res.send(conf[req.params.year])
 })
 
 
